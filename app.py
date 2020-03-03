@@ -3,9 +3,12 @@
 import os
 from flask import Flask, jsonify
 import sqlalchemy
+from middleware import middleware
 
 # web app
 app = Flask(__name__)
+
+app.wsgi_app = middleware(1, app.wsgi_app)
 
 # database engine
 engine = sqlalchemy.create_engine(os.getenv('SQL_URI'))
